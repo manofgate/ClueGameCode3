@@ -43,8 +43,8 @@ public class Board {
 	private Map<Integer, LinkedList<Integer>>adjList = new HashMap<Integer, LinkedList<Integer>>();
 	private HashSet<BoardCell> targets;
 	
-	int numRows;
-	int numColumns;
+	private	int numRows;
+	private	int numColumns;
 	int index;
 	
 	private boolean[] visited;
@@ -57,12 +57,12 @@ public class Board {
 //  constructor with initial setup shenanigans
 //
 	
-	public Board() throws FileNotFoundException, BadConfigFormatException{
+	public Board(){
 		loadConfigFiles();
 		calcAdjacencies();
 	}
 
-	public void loadConfigFiles() throws FileNotFoundException, BadConfigFormatException {
+	public void loadConfigFiles() {
 		loadConfigLegend();
 		loadConfigBoard();
 		loadCluePlayerConfigFiles();
@@ -94,13 +94,10 @@ public class Board {
 			Scanner in = new Scanner(reader);
 			while (in.hasNext()) {
 				String input = in.nextLine();
-				
 				String[] tokens = input.split(",");
-				
 				if (input.length() < 1) {
 					throw new BadConfigFormatException("Error with board config file.");
 				}
-				
 				for (int i = 0; i < tokens.length; i++) {
 					if (tokens[i].equalsIgnoreCase("W")) {
 						cells.add(new WalkwayCell(numRows, i));
@@ -108,12 +105,9 @@ public class Board {
 						cells.add(new RoomCell(numRows, i, tokens[i]));
 					}
 				}
-				
 				numRows++;
 			}
-			
 			numColumns = (cells.size() / numRows);
-			
 		} catch (FileNotFoundException e) {
 			System.out.println(e);
 		} catch (BadConfigFormatException e) {
@@ -129,7 +123,6 @@ public class Board {
 				LinkedList<Integer> list = new LinkedList<Integer>();
 				
 				int index = calcIndex(x, y);
-				
 				if(getCellAt(index).isWalkway()){
 					if (x > 0) {
 						int attempt = calcIndex(x-1, y);
@@ -344,14 +337,18 @@ public class Board {
 //	
 	
 //	variables
-	public ArrayList<Player> allPlayers = new ArrayList<Player>();
-	public Player getPlayer(int index) { return allPlayers.get(index); }
-	
-	public ArrayList<Card> deck = new ArrayList<Card>();
-	public ArrayList<Card> dealDeck = new ArrayList<Card>();
-	
-	public ArrayList<Card> cardsSeen = new ArrayList<Card>();
-	public ArrayList<Card> solution = new ArrayList<Card>();
+	private ArrayList<Player> allPlayers = new ArrayList<Player>();
+	public ArrayList<Player> getAllPlayers() {return allPlayers;}
+
+	private ArrayList<Card> deck = new ArrayList<Card>();
+	private ArrayList<Card> dealDeck = new ArrayList<Card>();
+	public ArrayList<Card> getDealDeck() {return dealDeck;}
+	public ArrayList<Card> getDeck() {return deck;}
+
+	private ArrayList<Card> cardsSeen = new ArrayList<Card>();
+	private ArrayList<Card> solution = new ArrayList<Card>();
+	public ArrayList<Card> getSolution() {return solution;}
+	public ArrayList<Card> getCardsSeen() {return cardsSeen;}
 	
 //	variables to hold list of cards, list of computer 
 //	players, one human player, and an indicator of whose turn it is
@@ -362,13 +359,23 @@ public class Board {
 //	GameSetup section
 //	
 
-	public void loadCluePlayerConfigFiles() throws FileNotFoundException, BadConfigFormatException {
+	
+	
+
+	public void loadCluePlayerConfigFiles() {
 		// create players
-		loadCluePlayers();
-		// generate cards
-		loadClueCards();
-		// deal cards
-		dealClueCards();
+		try {
+			loadCluePlayers();
+			// generate cards
+			loadClueCards();
+			// deal cards
+			dealClueCards();
+		} catch (FileNotFoundException e) {
+			System.out.println("File was not found!");
+		} catch (BadConfigFormatException e) {
+			System.out.println(e.getMessage());
+		}
+		
 	}
 	
 	public void loadCluePlayers() throws FileNotFoundException, BadConfigFormatException {
@@ -407,7 +414,7 @@ public class Board {
 		Card someCard;
 
 		dealDeck.addAll(deck);
-		
+		hazard.setSeed(hazard.nextLong());
 		// create solution set
 		while (true) {
 			someCard = dealDeck.get(hazard.nextInt(dealDeck.size()));
@@ -533,7 +540,7 @@ public class Board {
 //	main method, for debugging purposes
 //	
 	
-	public static void main(String[] args) throws FileNotFoundException, BadConfigFormatException {
+	public static void main(String[] args) {
 		System.out.println("Hello world!!\n");
 		
 		@SuppressWarnings("unused")

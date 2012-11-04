@@ -25,7 +25,7 @@ public class GameActionTests {
 //	test for checking an accusation
 	@Test
 	public void testCheckAccusation() {
-		ArrayList<Card> solutionSet = board.solution;
+		ArrayList<Card> solutionSet = board.getSolution();
 		// test if accusation is correct
 		assertTrue(board.checkAccusation(solutionSet.get(0), solutionSet.get(1), solutionSet.get(2)));
 		// test if accusation is wrong
@@ -108,8 +108,8 @@ public class GameActionTests {
 		// this method --> boss status bro
 		
 		ArrayList<Card> cardsHeldByComputers = new ArrayList<Card>();
-		for (Player somePlayer : board.allPlayers) { cardsHeldByComputers.addAll(somePlayer.cards); }
-		cardsHeldByComputers.removeAll(board.allPlayers.get(0).cards);
+		for (Player somePlayer : board.getAllPlayers()) { cardsHeldByComputers.addAll(somePlayer.cards); }
+		cardsHeldByComputers.removeAll(board.getAllPlayers().get(0).cards);
 		
 		Random hazard = new Random();
 		Card someCard; 
@@ -126,7 +126,7 @@ public class GameActionTests {
 				break;
 			}
 		}
-		someCard = board.disproveSuggestion(0, personCard.name, board.solution.get(1).name, board.solution.get(2).name);
+		someCard = board.disproveSuggestion(0, personCard.name, board.getSolution().get(1).name, board.getSolution().get(2).name);
 		assertTrue(someCard.name.equalsIgnoreCase(personCard.name));
 		// via room
 		while (true) {
@@ -136,7 +136,7 @@ public class GameActionTests {
 				break;
 			}
 		}
-		someCard = board.disproveSuggestion(0, board.solution.get(0).name, roomCard.name, board.solution.get(2).name);
+		someCard = board.disproveSuggestion(0, board.getSolution().get(0).name, roomCard.name, board.getSolution().get(2).name);
 		assertTrue(someCard.name.equalsIgnoreCase(roomCard.name));
 		// via weapon
 		while (true) {
@@ -146,10 +146,10 @@ public class GameActionTests {
 				break;
 			}
 		}
-		someCard = board.disproveSuggestion(0, board.solution.get(0).name, board.solution.get(1).name, weaponCard.name);
+		someCard = board.disproveSuggestion(0, board.getSolution().get(0).name, board.getSolution().get(1).name, weaponCard.name);
 		assertTrue(someCard.name.equalsIgnoreCase(weaponCard.name));
 		// via NULL (meaning no one could disprove the suggestion)
-		someCard = board.disproveSuggestion(0, board.solution.get(0).name, board.solution.get(1).name, board.solution.get(2).name);
+		someCard = board.disproveSuggestion(0, board.getSolution().get(0).name, board.getSolution().get(1).name, board.getSolution().get(2).name);
 		assertTrue(someCard.type == CardType.NULL);
 		
 		// all players, multiple matches
@@ -177,7 +177,7 @@ public class GameActionTests {
 		// this ensures that all players are queried
 		int nullCardReturned = 0;
 		for (int i = 0; i < 100; ++i) {
-			someCard = board.disproveSuggestion(0, board.solution.get(0).name, board.solution.get(1).name, board.solution.get(2).name);
+			someCard = board.disproveSuggestion(0, board.getSolution().get(0).name, board.getSolution().get(1).name, board.getSolution().get(2).name);
 			if (someCard.type == CardType.NULL) ++nullCardReturned; 
 		}
 		assertEquals(100, nullCardReturned);
@@ -203,12 +203,12 @@ public class GameActionTests {
 		}
 		
 		ArrayList<Card> cardsLeft = new ArrayList<Card>();
-		cardsLeft.addAll(board.deck);
-		cardsLeft.removeAll(board.cardsSeen);
-		cardsLeft.removeAll(board.allPlayers.get(5).cards);
+		cardsLeft.addAll(board.getDeck());
+		cardsLeft.removeAll(board.getCardsSeen());
+		cardsLeft.removeAll(board.getAllPlayers().get(5).cards);
 		
 		assertTrue(cardsLeft.size() == 3);
-		assertTrue(board.solution.containsAll(cardsLeft));
+		assertTrue(board.getSolution().containsAll(cardsLeft));
 			
 	}
 
