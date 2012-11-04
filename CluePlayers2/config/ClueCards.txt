@@ -1,0 +1,23 @@
+PERSON,Miss Scarlet
+PERSON,Mr. Green
+PERSON,Mrs. Peacock
+PERSON,Colonel Mustard
+PERSON,Mrs. White
+PERSON,Professor Plum
+ROOM,Conservatory
+ROOM,Billiard Room
+ROOM,Dining Room
+ROOM,Kitchen
+ROOM,Library
+ROOM,Lounge
+ROOM,Ballroom
+ROOM,Study
+ROOM,Hall
+WEAPON,Candlestick
+WEAPON,Knife
+WEAPON,Lead Pipe
+WEAPON,Revolver
+WEAPON,Rope
+WEAPON,Wrench
+WEAPON,Death Glare
+WEAPON,Gossip
