@@ -533,30 +533,7 @@ public class Board {
 		return someCard;
 	}
 	
-//	
-////////////////////////////////
-	
-////////////////////////////////
-//	main method, for debugging purposes
-//	
-	
-	public static void main(String[] args) {
-		System.out.println("Hello world!!\n");
-		
-		@SuppressWarnings("unused")
-		Board board = new Board();
-		
-//		System.out.println("Starting positions for players (given by index): ");
-//		System.out.println("Miss Scarlet: " + board.calcIndex(13, 22));
-//		System.out.println("Mr. Green: " + board.calcIndex(21, 6));
-//		System.out.println("Mrs. Peacock: " + board.calcIndex(0, 4));
-//		System.out.println("Colonel Mustard: " + board.calcIndex(21, 15));
-//		System.out.println("Mrs. White: " + board.calcIndex(13, 0));
-//		System.out.println("Professor Plum: " + board.calcIndex(0, 19));
-	
-		System.out.println("\nGoodbye world..");
-	}
-	
+
 //	
 ////////////////////////////////
 //		  END OF FILE		  //	
