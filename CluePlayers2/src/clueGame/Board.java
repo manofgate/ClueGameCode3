@@ -1,5 +1,6 @@
 package clueGame;
 
+import java.awt.Graphics;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -12,9 +13,11 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 
+import javax.swing.JPanel;
+
 import clueGame.Card.CardType;
 
-public class Board {
+public class Board extends JPanel{
 	
 ////////////////////////////////
 //  configuration files
@@ -533,7 +536,11 @@ public class Board {
 		return someCard;
 	}
 	
-
+	public void paintComponent(Graphics g){
+		for(BoardCell c: cells){
+			c.draw(g, this);
+		}
+	}
 //	
 ////////////////////////////////
 //		  END OF FILE		  //	
