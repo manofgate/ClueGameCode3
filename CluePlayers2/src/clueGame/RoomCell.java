@@ -6,7 +6,7 @@ import java.awt.Graphics;
 public class RoomCell extends BoardCell {
 
 	public enum DoorDirection { UP, DOWN, LEFT, RIGHT, NONE, NAME }
-	
+
 	DoorDirection doorDirection;
 	char initial;
 	private static final int length = 23;
@@ -16,7 +16,7 @@ public class RoomCell extends BoardCell {
 		this.initial = token.charAt(0);
 		this.doorDirection = findDoorDirection(token);
 	}
-	
+
 	public DoorDirection findDoorDirection(String direction) {
 		if (direction.length() == 1) {
 			return DoorDirection.NONE;
@@ -38,19 +38,20 @@ public class RoomCell extends BoardCell {
 			}
 		}
 	}
-	
+
 	public boolean isRoom() { return true; }
 
 	public DoorDirection getDoorDirection() { return doorDirection; }
 
 	public char getInitial() { return initial; }
-	
+
 	public boolean isDoorway() {
 		if(this.doorDirection != DoorDirection.NONE){
 			return true;
 		}
 		return false;
 	}
+	
 	@Override
 	public void draw(Graphics g, Board board){
 		g.setColor(Color.gray);
@@ -66,8 +67,8 @@ public class RoomCell extends BoardCell {
 			if(this.doorDirection == DoorDirection.RIGHT)
 				g.fillRect(column*length+length-4, row*length, 4, length);
 			if(this.doorDirection == DoorDirection.NAME)
-				g.drawString(board.rooms.get(initial), (int) (column*length-.5*length), row*length);
+				g.drawString(board.rooms.get(initial), (int) (column*length-.5*length), row*length - 5);
 		}
-		
+
 	}
 }

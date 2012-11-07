@@ -17,7 +17,8 @@ import javax.swing.JPanel;
 
 import clueGame.Card.CardType;
 
-public class Board extends JPanel{
+public class Board extends JPanel {
+	private static final long serialVersionUID = 1L;
 	
 ////////////////////////////////
 //  configuration files
@@ -60,7 +61,7 @@ public class Board extends JPanel{
 //  constructor with initial setup shenanigans
 //
 	
-	public Board(){
+	public Board() {
 		loadConfigFiles();
 		calcAdjacencies();
 	}
@@ -341,17 +342,17 @@ public class Board extends JPanel{
 	
 //	variables
 	private ArrayList<Player> allPlayers = new ArrayList<Player>();
-	public ArrayList<Player> getAllPlayers() {return allPlayers;}
+	public ArrayList<Player> getAllPlayers() { return allPlayers; }
 
 	private ArrayList<Card> deck = new ArrayList<Card>();
 	private ArrayList<Card> dealDeck = new ArrayList<Card>();
-	public ArrayList<Card> getDealDeck() {return dealDeck;}
-	public ArrayList<Card> getDeck() {return deck;}
+	public ArrayList<Card> getDealDeck() { return dealDeck; }
+	public ArrayList<Card> getDeck() { return deck; }
 
 	private ArrayList<Card> cardsSeen = new ArrayList<Card>();
 	private ArrayList<Card> solution = new ArrayList<Card>();
-	public ArrayList<Card> getSolution() {return solution;}
-	public ArrayList<Card> getCardsSeen() {return cardsSeen;}
+	public ArrayList<Card> getSolution() { return solution; }
+	public ArrayList<Card> getCardsSeen() { return cardsSeen; }
 	
 //	variables to hold list of cards, list of computer 
 //	players, one human player, and an indicator of whose turn it is
@@ -360,10 +361,7 @@ public class Board extends JPanel{
 	
 ////////////////////////////////
 //	GameSetup section
-//	
-
-	
-	
+//		
 
 	public void loadCluePlayerConfigFiles() {
 		// create players
@@ -535,11 +533,33 @@ public class Board extends JPanel{
 		cardsSeen.add(someCard);
 		return someCard;
 	}
+
+//	
+////////////////////////////////
+
+////////////////////////////////
+//	clue board GUI
 	
-	public void paintComponent(Graphics g){
+	public int[] calcColumnAndRow(int index) {
+		
+		int[] columnAndRow = new int[2];
+		
+		int column = index % numColumns;
+		int row = index / numColumns;
+		
+		columnAndRow[0] = column;
+		columnAndRow[1] = row;
+		
+		return columnAndRow;
+	}
+	
+	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		for(BoardCell c: cells){
-			c.draw(g, this);
+		for (BoardCell cell : cells) {
+			cell.draw(g, this);
+		}
+		for (Player player : allPlayers) {
+			player.draw(g, this);
 		}
 	}
 //	

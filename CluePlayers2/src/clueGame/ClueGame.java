@@ -10,24 +10,35 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 public class ClueGame extends JFrame {
-	public ClueGame(){
-		setSize(700, 700);
+	private static final long serialVersionUID = 1L;
+
+	public ClueGame() {
+		// init
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Clue Game");
+		setSize(700, 700);
+		
+		// menu
 		JMenuBar menu = new JMenuBar();
+		setJMenuBar(menu);
 		menu.add(createFileMenu());
-		add(menu, BorderLayout.NORTH);
+		
+		// components
 		Board board = new Board();
 		add(board, BorderLayout.CENTER);
+		
+		// set visible
+		setVisible(true);
+		
 	}
-	private JMenu createFileMenu()
-	{
+	
+	// file menu, for nothing but teh [EXIT]
+	private JMenu createFileMenu() {
 	  JMenu menu = new JMenu("File"); 
 	  menu.add(createFileExitItem());
 	  return menu;
 	}
-	private JMenuItem createFileExitItem()
-	{
+	private JMenuItem createFileExitItem() {
 	  JMenuItem item = new JMenuItem("Exit");
 	  class MenuItemListener implements ActionListener {
 	    public void actionPerformed(ActionEvent e)
@@ -38,20 +49,13 @@ public class ClueGame extends JFrame {
 	  item.addActionListener(new MenuItemListener());
 	  return item;
 	}
+	
+	// main, wooters
 	public static void main(String[] args) {
 		System.out.println("Hello world!!\n");
-		ClueGame cGameGui = new ClueGame();
-		cGameGui.setVisible(true);
-		//@SuppressWarnings("unused")
-		//Board board = new Board();
 		
-//		System.out.println("Starting positions for players (given by index): ");
-//		System.out.println("Miss Scarlet: " + board.calcIndex(13, 22));
-//		System.out.println("Mr. Green: " + board.calcIndex(21, 6));
-//		System.out.println("Mrs. Peacock: " + board.calcIndex(0, 4));
-//		System.out.println("Colonel Mustard: " + board.calcIndex(21, 15));
-//		System.out.println("Mrs. White: " + board.calcIndex(13, 0));
-//		System.out.println("Professor Plum: " + board.calcIndex(0, 19));
+		@SuppressWarnings("unused")
+		ClueGame futureHazard = new ClueGame();
 	
 		System.out.println("\nGoodbye world..");
 	}

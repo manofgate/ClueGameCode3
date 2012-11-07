@@ -1,10 +1,13 @@
 package clueGame;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 public abstract class Player {
+	
+	private static final int length = 23;
 	
 //	instance variables
 	public String name;
@@ -44,16 +47,21 @@ public abstract class Player {
 	}
 	
 	// Helpers for test purposes
-	public void giveCard(Card card){
+	public void giveCard(Card card) {
 		//Add card to players card array
-		if(!cards.contains(card))
-			cards.add(card);
+		if(!cards.contains(card)) cards.add(card);
 	}
-	public boolean hasCard(Card card){
-		if(cards.contains(card))
-			return true;
-		else
-			return false;	
+	public boolean hasCard(Card card) {
+		if (cards.contains(card)) return true;
+		else return false;	
 	}
-
+	
+	public void draw(Graphics g, Board board) {
+		int[] columnAndRow = board.calcColumnAndRow(indexedLocation);
+		g.setColor(color);
+		g.fillOval(columnAndRow[0] * length + 1, columnAndRow[1] * length + 1, length - 2, length - 2);
+		g.setColor(Color.BLACK);
+		g.drawOval(columnAndRow[0] * length + 1, columnAndRow[1] * length + 1, length - 2, length - 2);
+	}
+	
 }

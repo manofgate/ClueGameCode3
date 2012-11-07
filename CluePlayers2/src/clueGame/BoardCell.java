@@ -2,7 +2,7 @@ package clueGame;
 
 import java.awt.Graphics;
 
-public class BoardCell {
+public abstract class BoardCell {
 
 	public int row;
 	public int column;
@@ -29,9 +29,8 @@ public class BoardCell {
 		}
 		return false;
 	}
-	public void draw(Graphics g, Board b){
 	
-	}
+	public abstract void draw(Graphics g, Board b);
 
 	
 }
