@@ -11,6 +11,8 @@ import javax.swing.JMenuItem;
 
 public class ClueGame extends JFrame {
 	private static final long serialVersionUID = 1L;
+	
+	DetectiveNotes detectiveNotes;
 
 	public ClueGame() {
 		// init
@@ -18,46 +20,58 @@ public class ClueGame extends JFrame {
 		setTitle("Clue Game");
 		setSize(700, 700);
 		
+		// components
+		Board board = new Board();
+		add(board, BorderLayout.CENTER);
+
 		// menu
 		JMenuBar menu = new JMenuBar();
 		setJMenuBar(menu);
 		menu.add(createFileMenu());
 		
-		// components
-		Board board = new Board();
-		add(board, BorderLayout.CENTER);
-		
+		detectiveNotes = new DetectiveNotes(board);
+
 		// set visible
 		setVisible(true);
-		
+
 	}
-	
+
 	// file menu, for nothing but teh [EXIT]
 	private JMenu createFileMenu() {
-	  JMenu menu = new JMenu("File"); 
-	  menu.add(createFileExitItem());
-	  return menu;
+		JMenu menu = new JMenu("File"); 
+		menu.add(createDetectiveNotes());
+		menu.add(createFileExitItem());
+		return menu;
+	}
+	private JMenuItem createDetectiveNotes() {
+		JMenuItem item = new JMenuItem("Show Detective Notes");
+		class MenuItemListener implements ActionListener {
+			public void actionPerformed(ActionEvent e) {
+				detectiveNotes.setVisible(true);
+			}
+		}
+		item.addActionListener(new MenuItemListener());
+		return item;
 	}
 	private JMenuItem createFileExitItem() {
-	  JMenuItem item = new JMenuItem("Exit");
-	  class MenuItemListener implements ActionListener {
-	    public void actionPerformed(ActionEvent e)
-	    {
-	       System.exit(0);
-	    }
-	  }
-	  item.addActionListener(new MenuItemListener());
-	  return item;
+		JMenuItem item = new JMenuItem("Exit");
+		class MenuItemListener implements ActionListener {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		}
+		item.addActionListener(new MenuItemListener());
+		return item;
 	}
-	
+
 	// main, wooters
 	public static void main(String[] args) {
 		System.out.println("Hello world!!\n");
-		
+
 		@SuppressWarnings("unused")
 		ClueGame futureHazard = new ClueGame();
-	
+
 		System.out.println("\nGoodbye world..");
 	}
-	
+
 }
