@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 public class WalkwayCell extends BoardCell {
-	private static final int length = 23;
 	public WalkwayCell(int row, int column) {
 		this.row = row;
 		this.column = column;

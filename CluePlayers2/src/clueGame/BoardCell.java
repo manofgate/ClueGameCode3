@@ -3,7 +3,7 @@ package clueGame;
 import java.awt.Graphics;
 
 public abstract class BoardCell {
-
+	protected static final int length = 23;
 	public int row;
 	public int column;
 	

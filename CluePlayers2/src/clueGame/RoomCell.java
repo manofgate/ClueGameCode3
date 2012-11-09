@@ -9,7 +9,7 @@ public class RoomCell extends BoardCell {
 
 	DoorDirection doorDirection;
 	char initial;
-	private static final int length = 23;
+	
 	public RoomCell(int row, int column, String token) {
 		this.row = row;
 		this.column = column;
