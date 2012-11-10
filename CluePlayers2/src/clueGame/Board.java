@@ -533,7 +533,14 @@ public class Board extends JPanel {
 		cardsSeen.add(someCard);
 		return someCard;
 	}
-
+	public int findHuman(){
+		for(Player p: allPlayers){
+			if(p.isHuman())
+				return allPlayers.indexOf(p);
+		}
+		return (Integer) null;
+		
+	}
 //	
 ////////////////////////////////
 

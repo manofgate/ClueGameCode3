@@ -23,7 +23,10 @@ public class ClueGame extends JFrame {
 		// components
 		Board board = new Board();
 		add(board, BorderLayout.CENTER);
-
+		PlayerDisplay pDisplay = new PlayerDisplay(board.getAllPlayers().get(board.findHuman()));
+		
+		add(pDisplay, BorderLayout.EAST);
+		
 		// menu
 		JMenuBar menu = new JMenuBar();
 		setJMenuBar(menu);

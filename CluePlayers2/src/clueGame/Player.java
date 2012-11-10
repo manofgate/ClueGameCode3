@@ -56,6 +56,9 @@ public abstract class Player {
 		else return false;	
 	}
 	
+	public ArrayList<Card> getCards() {
+		return cards;
+	}
 	public void draw(Graphics g, Board board) {
 		int[] columnAndRow = board.calcColumnAndRow(indexedLocation);
 		g.setColor(color);

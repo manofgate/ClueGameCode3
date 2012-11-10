@@ -1,0 +1,13 @@
+* fixed the length - Ben
+* Cleaned up, added .gitignore to ignore compiled files. -peter
+* Didn't push my DetectiveNotes class, my bad.	-peter
+* Done.	- peter
+* Players are now being drawn. Nice job, by the way, on the code.	-peter
+* Confirming collaborator is added.	-peter
+* want to deleye CluePlayers.	- ben
+* added super to paint	- ben
+* Ben added draws
+* Ben added JFrame
+* fixed it up	- Ben
+* initial adding
+* Initial commit
