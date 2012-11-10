@@ -69,7 +69,6 @@ public class PlayerDisplay extends JPanel {
 			}
 			if(c.type == CardType.WEAPON){
 				w.addTExt(c.name);
-			
 			}
 		}
 		panel.add(p);

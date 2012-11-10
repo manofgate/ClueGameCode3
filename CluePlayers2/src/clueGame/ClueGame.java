@@ -24,8 +24,9 @@ public class ClueGame extends JFrame {
 		Board board = new Board();
 		add(board, BorderLayout.CENTER);
 		PlayerDisplay pDisplay = new PlayerDisplay(board.getAllPlayers().get(board.findHuman()));
-		
 		add(pDisplay, BorderLayout.EAST);
+		GameControlPanel  gcp = new GameControlPanel();
+		add(gcp, BorderLayout.SOUTH);
 		
 		// menu
 		JMenuBar menu = new JMenuBar();
