@@ -2,6 +2,7 @@ package clueGame;
 
 import java.awt.GridLayout;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -9,7 +10,11 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
 public class GameControlPanel extends JPanel {
-	public class Die extends JPanel{
+	private static final long serialVersionUID = 1L;
+	
+	public class Die extends JPanel {
+		private static final long serialVersionUID = 1L;
+		
 		private JTextField die;
 		public Die(){
 			JLabel label = new JLabel("Roll");
@@ -20,7 +25,10 @@ public class GameControlPanel extends JPanel {
 			setBorder(new TitledBorder(new EtchedBorder(), "Die"));
 		}
 	}
-	public class Guess extends JPanel{
+	
+	public class Guess extends JPanel {
+		private static final long serialVersionUID = 1L;
+		
 		private JTextField guess;
 		public Guess(){
 			JLabel label = new JLabel("Guess");
@@ -31,10 +39,13 @@ public class GameControlPanel extends JPanel {
 			setBorder(new TitledBorder(new EtchedBorder(), "Guess"));
 		}
 	}
-	public class GuessResult extends JPanel{
+	
+	public class GuessResult extends JPanel {
+		private static final long serialVersionUID = 1L;
+		
 		private JTextField guessResult;
 		public GuessResult(){
-			JLabel label = new JLabel("Guess result");
+			JLabel label = new JLabel("Response");
 			guessResult = new JTextField();
 			add(label);
 			guessResult.setEditable(false);
@@ -42,15 +53,45 @@ public class GameControlPanel extends JPanel {
 			setBorder(new TitledBorder(new EtchedBorder(), "Guess Result"));
 		}
 	}
-	public GameControlPanel(){
+	
+	public class TurnIndicator extends JPanel {
+		private static final long serialVersionUID = 1L;
+		
+		private JTextField turn;
+		public TurnIndicator() {
+			// init components
+			JLabel label = new JLabel("Whose turn?");
+			turn = new JTextField();
+			
+			// set layout and add components
+			setLayout(new GridLayout(2, 1));
+			add(label);
+			add(turn);
+			
+		}
+	
+	}
+	
+	public GameControlPanel() {
+		
+		// init components
 		Die die = new Die();
 		Guess guess = new Guess();
 		GuessResult guessResult = new GuessResult();
 		JPanel panel = new JPanel();
+		TurnIndicator ti = new TurnIndicator();
+		
+		// set layout and add components
 		panel.setLayout(new GridLayout(2,3));
+		panel.add(ti);
+		panel.add(new JButton("Next Player"));
+		panel.add(new JButton("Make Accusation"));
 		panel.add(die);
 		panel.add(guess);
 		panel.add(guessResult);
+		
 		add(panel);
+		
 	}
+	
 }
