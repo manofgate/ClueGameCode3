@@ -1,16 +1,21 @@
 package clueGame;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
 
 public class ComputerPlayer extends Player {
+	private boolean noDisprove;
+	private ArrayList<Card> sugAcusation = new ArrayList<Card>();
 	
 	public ComputerPlayer() {
 		super("Captain Cadaver", "black", 0);
+		noDisprove = false;
 	}
 	
 	public ComputerPlayer(String name, String color, int startingIndexedLocation) {
 		super(name, color, startingIndexedLocation);
+		noDisprove = false;
 	}
 	
 	@Override
@@ -39,6 +44,21 @@ public class ComputerPlayer extends Player {
 		targetArray = targets.toArray(new BoardCell[targets.size()]);
 		
 		return targetArray[targetChoice];
+	}
+
+	public void setNoDisprove(boolean noDisprove) {
+		this.noDisprove = noDisprove;
+	}
+
+	public boolean isNoDisprove() {
+		return noDisprove;
+	}
+	public ArrayList<Card> getSugAcusation() {
+		return sugAcusation;
+	}
+
+	public void setSugAcusation(ArrayList<Card> sugAcusation) {
+		this.sugAcusation = sugAcusation;
 	}
 
 }

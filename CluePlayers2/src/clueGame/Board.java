@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import clueGame.Card.CardType;
@@ -528,11 +529,15 @@ public class Board extends JPanel {
 				break;
 			}
 		}
-		
+		suggestion.add(personCard);
+		suggestion.add(roomCard);
+		suggestion.add(weaponCard);
 		someCard = disproveSuggestion(indexOfComputerPlayer, personCard.name, roomCard.name, weaponCard.name);
 		cardsSeen.add(someCard);
 		return someCard;
 	}
+	private ArrayList<Card> suggestion = new ArrayList<Card>();
+	public ArrayList<Card> getSuggestion(){return suggestion;}
 	public int findHuman(){
 		for(Player p: allPlayers){
 			if(p.isHuman())
@@ -569,13 +574,35 @@ public class Board extends JPanel {
 			player.draw(g, this);
 		}
 	}
-	
-	public void makeMove(ComputerPlayer player, int step){
-		calcTargets(player.indexedLocation, step);
-		BoardCell picked = player.pickLocation(targets);
-		player.setIndexedLocation(calcIndex(picked.row, picked.column));
-		repaint();
-		System.out.println(player.indexedLocation);
+	public Card disprovedCard= new Card();
+	public Boolean makeMove(ComputerPlayer playerd, int step){
+		suggestion.clear();
+		if(!playerd.isNoDisprove()){
+			calcTargets(playerd.indexedLocation, step);
+			BoardCell picked = playerd.pickLocation(targets);
+			playerd.setIndexedLocation(calcIndex(picked.row, picked.column));
+			repaint();
+			Boolean inRoom = false;
+			if(picked.isRoom()){
+				inRoom = true;
+				disprovedCard = makeSuggestion(allPlayers.indexOf(playerd));
+				if(disprovedCard.type == CardType.NULL){
+					playerd.setNoDisprove(true);
+					playerd.setSugAcusation((ArrayList<Card>) suggestion.clone());
+				}
+			}
+			return inRoom;
+		}
+		else{
+			playerd.setNoDisprove(false);  
+			if(checkAccusation(playerd.getSugAcusation().get(0), playerd.getSugAcusation().get(1), playerd.getSugAcusation().get(2))){
+				JOptionPane.showMessageDialog(this, (playerd.name + ", accused " +playerd.getSugAcusation().get(0).name + " " +playerd.getSugAcusation().get(1).name +" " +playerd.getSugAcusation().get(2).name + "is correct and won!"));
+			}
+			else{
+				JOptionPane.showMessageDialog(this, (playerd.name + ", accused: " +playerd.getSugAcusation().get(0).name + " " +playerd.getSugAcusation().get(1).name +" " +playerd.getSugAcusation().get(2).name + "is NOT correct!"));
+			}
+		}
+		return null;
 	}
 //	
 ////////////////////////////////

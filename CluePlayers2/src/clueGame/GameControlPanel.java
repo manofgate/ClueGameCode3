@@ -1,5 +1,6 @@
 package clueGame;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -10,6 +11,7 @@ import java.util.Random;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
@@ -24,6 +26,9 @@ public class GameControlPanel extends JPanel{
 	private prListner prList = new prListner();
 	private Board board;
 	private Random rand= new Random();
+	private Guess guess; 
+	private Die die;
+	private GuessResult guessResult;
 	public class Die extends JPanel {
 		private static final long serialVersionUID = 1L;
 		
@@ -32,10 +37,15 @@ public class GameControlPanel extends JPanel{
 			setLayout(new FlowLayout(FlowLayout.LEFT));
 			JLabel label = new JLabel("Roll");
 			die = new JTextField();
+			die.setPreferredSize(new Dimension(30, 30));
 			die.setEditable(false);
+			
 			add(label);
 			add(die);
 			setBorder(new TitledBorder(new EtchedBorder(), "Die"));
+		}
+		public void setRoll(int roll){
+			die.setText(" "+roll);
 		}
 	}
 	
@@ -48,14 +58,19 @@ public class GameControlPanel extends JPanel{
 			JLabel label = new JLabel("Guess");
 			guess = new JTextField();
 			//add(label);
+			guess.setPreferredSize(new Dimension(200, 20));
 			guess.setEditable(false);
 			//add(guess);
 			JPanel panel = new JPanel();
 			panel.setLayout(new GridLayout(2,1));
 			panel.add(label);
 			panel.add(guess);
+			panel.setSize(getMaximumSize());
 			add(panel);
 			setBorder(new TitledBorder(new EtchedBorder(), "Guess"));
+		}
+		public void setGuess(String guessed){
+			guess.setText(guessed);
 		}
 	}
 	
@@ -67,10 +82,14 @@ public class GameControlPanel extends JPanel{
 			setLayout(new FlowLayout(FlowLayout.LEFT));
 			JLabel label = new JLabel("Response");
 			guessResult = new JTextField();
+			guessResult.setPreferredSize(new Dimension(100, 20));
 			add(label);
 			guessResult.setEditable(false);
 			add(guessResult);
 			setBorder(new TitledBorder(new EtchedBorder(), "Guess Result"));
+		}
+		public void setResult(String message){
+			guessResult.setText(message);
 		}
 	}
 	
@@ -98,10 +117,10 @@ public class GameControlPanel extends JPanel{
 	public GameControlPanel(Board bord) {
 		
 		// init components
-		Die die = new Die();
+		die = new Die();
 		this.board = bord;
-		Guess guess = new Guess();
-		GuessResult guessResult = new GuessResult();
+		guess = new Guess();
+		guessResult = new GuessResult();
 		JPanel panel = new JPanel();
 		ti = new TurnIndicator();
 		nextPlayer = new JButton("Next Player");
@@ -124,12 +143,19 @@ public class GameControlPanel extends JPanel{
 		@Override
 		public void actionPerformed(ActionEvent e){
 			if(e.getSource() == nextPlayer){
+				guess.setGuess("");
+				guessResult.setResult("");
 				ti.setText(players.get(whichPlayer).name);
 				rand.setSeed(rand.nextLong());
 				int roll = rand.nextInt(6)+1;
+				die.setRoll(roll);
 				if(whichPlayer !=0){
-					System.out.println("yo dawg");
-					board.makeMove((ComputerPlayer) players.get(whichPlayer), roll);
+					//if(!((ComputerPlayer) players.get(whichPlayer)).isNoDisprove()){
+						Boolean roomy = board.makeMove((ComputerPlayer) players.get(whichPlayer), roll);
+						if(roomy){
+							guess.setGuess(board.getSuggestion().get(0).name + " " + board.getSuggestion().get(1).name + " " + board.getSuggestion().get(2).name);
+							guessResult.setResult(board.disprovedCard.name);
+						}
 				}
 				whichPlayer++;
 				if(whichPlayer >5)
