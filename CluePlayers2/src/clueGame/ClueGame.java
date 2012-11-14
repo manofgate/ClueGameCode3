@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 public class ClueGame extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -25,7 +26,7 @@ public class ClueGame extends JFrame {
 		add(board, BorderLayout.CENTER);
 		PlayerDisplay pDisplay = new PlayerDisplay(board.getAllPlayers().get(board.findHuman()));
 		add(pDisplay, BorderLayout.EAST);
-		GameControlPanel  gcp = new GameControlPanel();
+		GameControlPanel  gcp = new GameControlPanel(board);
 		add(gcp, BorderLayout.SOUTH);
 		
 		// menu
@@ -35,9 +36,10 @@ public class ClueGame extends JFrame {
 		
 		detectiveNotes = new DetectiveNotes(board);
 
+		
 		// set visible
 		setVisible(true);
-
+		JOptionPane.showMessageDialog(this, "you are Miss Scarlett, press Next Player to begin play", "Welcome to CLUE", JOptionPane.INFORMATION_MESSAGE);
 	}
 
 	// file menu, for nothing but teh [EXIT]

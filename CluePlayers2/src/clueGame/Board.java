@@ -569,6 +569,14 @@ public class Board extends JPanel {
 			player.draw(g, this);
 		}
 	}
+	
+	public void makeMove(ComputerPlayer player, int step){
+		calcTargets(player.indexedLocation, step);
+		BoardCell picked = player.pickLocation(targets);
+		player.setIndexedLocation(calcIndex(picked.row, picked.column));
+		repaint();
+		System.out.println(player.indexedLocation);
+	}
 //	
 ////////////////////////////////
 //		  END OF FILE		  //	

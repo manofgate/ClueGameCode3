@@ -66,5 +66,8 @@ public abstract class Player {
 		g.setColor(Color.BLACK);
 		g.drawOval(columnAndRow[0] * length + 1, columnAndRow[1] * length + 1, length - 2, length - 2);
 	}
+	public void setIndexedLocation(int indexed){
+		indexedLocation = indexed;
+	}
 	
 }

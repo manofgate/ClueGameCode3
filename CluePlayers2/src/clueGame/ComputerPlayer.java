@@ -41,5 +41,4 @@ public class ComputerPlayer extends Player {
 		return targetArray[targetChoice];
 	}
 
-
 }
