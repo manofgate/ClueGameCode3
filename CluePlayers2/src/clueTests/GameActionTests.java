@@ -184,6 +184,7 @@ public class GameActionTests {
 	}
 
 	//	test for making a suggestion
+	@SuppressWarnings("static-access")
 	@Test
 	public void testMakeSuggestionComputer() {
 		// this test DOES NOT take into account which

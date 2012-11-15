@@ -102,15 +102,12 @@ public class HumanGuess extends JDialog {
 				
 				boolean winner = board.checkAccusation(person, room, weapon);
 				
-				
-				
 				if (winner) {
 					GameControlPanel.nextPlayer.setEnabled(false);
 					JOptionPane.showMessageDialog(null, "You win!", "Accusation correct!", 0);
 				}
 				else {
 					JOptionPane.showMessageDialog(null, "Sorry, not correct!", "Accusation not correct!", 0);
-
 				}
 			}
 			else if (e.getSource() == cancel) {

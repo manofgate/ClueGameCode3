@@ -3,7 +3,6 @@ package clueGame;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -16,7 +15,11 @@ public class ClueGame extends JFrame {
 	DetectiveNotes detectiveNotes;
 	
 	public static GameControlPanel gcp;
-
+	
+	public static HumanGuess humanGuess;
+	
+	Board board;
+	
 	public ClueGame() {
 		// init
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -25,7 +28,7 @@ public class ClueGame extends JFrame {
 		setResizable(false);
 		
 		// components
-		Board board = new Board();
+		board = new Board();
 		add(board, BorderLayout.CENTER);
 		gcp = new GameControlPanel(board);
 		PlayerDisplay pDisplay = new PlayerDisplay(board.getAllPlayers().get(board.findHuman()));
@@ -72,15 +75,21 @@ public class ClueGame extends JFrame {
 		item.addActionListener(new MenuItemListener());
 		return item;
 	}
+	
+	
 
 	// main, wooters
 	public static void main(String[] args) {
 		System.out.println("Hello world!!\n");
 
-		@SuppressWarnings("unused")
 		ClueGame futureHazard = new ClueGame();
+		
+		System.out.println("[DEBUG] - SOLUTIONS");
+		for (Card card : futureHazard.board.getSolution()) {
+			System.out.println(card.name);
+		}
 
-		System.out.println("\nGoodbye world..");
+		System.out.println("\nGoodbye world..\n");
 	}
 
 }

@@ -610,7 +610,7 @@ public class Board extends JPanel {
 	
 	// given a computer player and a dice roll
 	// make the move or make an accusation
-	@SuppressWarnings("unchecked") // <-- :(
+	@SuppressWarnings({ "unchecked", "static-access" }) // <-- :(
 	public Boolean makeMove(ComputerPlayer playerd, int step) {
 		suggestion.clear();
 		if (!playerd.isNoDisprove()) {
@@ -637,16 +637,16 @@ public class Board extends JPanel {
 		else {
 			playerd.setNoDisprove(false);  
 			if (checkAccusation(playerd.getSugAcusation().get(0), playerd.getSugAcusation().get(1), playerd.getSugAcusation().get(2))) {
-				JOptionPane.showMessageDialog(null, 
+				JOptionPane.showMessageDialog(this, 
 						playerd.name + ", accused " + 
 						playerd.getSugAcusation().get(0).name + " " + 
 						playerd.getSugAcusation().get(1).name + " " + 
 						playerd.getSugAcusation().get(2).name + 
-						" is correct and won!", "Accusation Correct!", 0);
+						" is correct and won!", "Accusation correct!", JOptionPane.INFORMATION_MESSAGE);
 				ClueGame.gcp.nextPlayer.setEnabled(false);
 			}
 			else {
-				JOptionPane.showMessageDialog(this, (playerd.name + ", accused " + playerd.getSugAcusation().get(0).name + " " + playerd.getSugAcusation().get(1).name +" " +playerd.getSugAcusation().get(2).name + " is NOT correct!"), "Accusation not correct!", 0);
+				JOptionPane.showMessageDialog(this, (playerd.name + ", accused " + playerd.getSugAcusation().get(0).name + " " + playerd.getSugAcusation().get(1).name +" " +playerd.getSugAcusation().get(2).name + " is NOT correct!"), "Accusation not correct!", JOptionPane.INFORMATION_MESSAGE);
 			}
 		}
 		return null;
@@ -673,6 +673,7 @@ public class Board extends JPanel {
 	// board mouse handler, makes the players move 
 	// if it is their time to move
 	private class MouseHandler implements MouseListener {
+		@SuppressWarnings("static-access")
 		@Override
 		public void mousePressed(MouseEvent e) {
 			if (targetsSet) {
@@ -686,6 +687,7 @@ public class Board extends JPanel {
 					ClueGame.gcp.makeAccusation.setEnabled(false);
 					ClueGame.gcp.nextPlayer.setEnabled(true);
 					repaint();
+					if (ClueGame.humanGuess != null) ClueGame.humanGuess.setVisible(false);
 					//
 					//	START HERE
 					//

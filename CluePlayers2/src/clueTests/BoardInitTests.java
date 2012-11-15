@@ -27,6 +27,7 @@ public class BoardInitTests {
 	// these tests are specific to my config files
 	@Test
 	public void roomConfigFileLoadedCorrectly() {
+		@SuppressWarnings("static-access")
 		Map<Character, String> rooms = board.getRooms();
 		assertEquals(NUM_ROOMS, rooms.size());
 		assertEquals("Conservatory", 	rooms.get('C'));

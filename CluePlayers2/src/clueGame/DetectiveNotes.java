@@ -30,8 +30,6 @@ public class DetectiveNotes extends JDialog {
 			else if (card.type == Card.CardType.ROOM) rooms.add(card.name);
 			else if (card.type == Card.CardType.WEAPON) weapons.add(card.name);
 		}
-		rooms.remove("Walkway");
-		rooms.remove("Closet");
 		
 		// set layout and add components
 		setLayout(new GridLayout(3, 2));

@@ -16,11 +16,11 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
 public class GameControlPanel extends JPanel {
-	
 	private static final long serialVersionUID = 1L;
+	
 	private ArrayList<Player> players = new ArrayList<Player>();
 	private int whichPlayer = 0;
-	public JButton nextPlayer, makeAccusation;
+	static public JButton nextPlayer, makeAccusation;
 	private TurnIndicator ti;
 	private prListner prList = new prListner();
 	private Board board;
@@ -132,6 +132,7 @@ public class GameControlPanel extends JPanel {
 		
 		// oh thats where this thing was hiding... o.O
 		nextPlayer.addActionListener(prList);
+		makeAccusation.addActionListener(new accusationButtonListener());
 		
 		panel.setPreferredSize(new Dimension(700, 136));
 		panel.add(ti);
@@ -144,7 +145,7 @@ public class GameControlPanel extends JPanel {
 		
 	}
 	
-	public class prListner implements ActionListener{
+	public class prListner implements ActionListener {
 		@Override
 		// Next Player Button listener!!! <-- <-- 
 		public void actionPerformed(ActionEvent e) {
@@ -162,11 +163,6 @@ public class GameControlPanel extends JPanel {
 				// create a die roll (1-6) and set display
 				int roll = rand.nextInt(6)+1;
 				die.setRoll(roll);
-				
-				//
-				//  START HERE
-				//
-				
 	
 				// if whichPlayer = 0, do human stuff
 				if (whichPlayer == 0 && !board.targetsSet) {
@@ -188,7 +184,6 @@ public class GameControlPanel extends JPanel {
 					roll = rand.nextInt(6)+1;
 					die.setRoll(roll);
 				}
-				// 0 is human player, i believe
 				// so if not human, execute computer code
 				if (whichPlayer != 0) {
 					//if(!((ComputerPlayer) players.get(whichPlayer)).isNoDisprove()){
@@ -207,4 +202,14 @@ public class GameControlPanel extends JPanel {
 			}
 		}
 	}
+	
+	public class accusationButtonListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			ClueGame.humanGuess = new HumanGuess(board);
+		}
+		
+	}
+	
 }
