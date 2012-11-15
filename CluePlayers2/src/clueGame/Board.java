@@ -655,13 +655,15 @@ public class Board extends JPanel {
 	private class MouseHandler implements MouseListener {
 		@Override
 		public void mousePressed(MouseEvent e) {
-			if (targetsSet && !playerHasMoved) {
+			if (targetsSet) {
 				int column = e.getX() / BoardCell.length;
 				int row = e.getY() / BoardCell.length;
 				BoardCell cell = getCellAt(calcIndex(row, column));
 				if (cell.active) {
 					allPlayers.get(0).indexedLocation = calcIndex(row,column);
 					playerHasMoved = true;
+					ClueGame.gcp.makeAccusation.setEnabled(false);
+					ClueGame.gcp.nextPlayer.setEnabled(true);
 					repaint();
 				}
 			}

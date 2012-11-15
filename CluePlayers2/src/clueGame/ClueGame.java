@@ -14,6 +14,8 @@ public class ClueGame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	
 	DetectiveNotes detectiveNotes;
+	
+	public static GameControlPanel gcp;
 
 	public ClueGame() {
 		// init
@@ -24,9 +26,9 @@ public class ClueGame extends JFrame {
 		// components
 		Board board = new Board();
 		add(board, BorderLayout.CENTER);
+		gcp = new GameControlPanel(board);
 		PlayerDisplay pDisplay = new PlayerDisplay(board.getAllPlayers().get(board.findHuman()));
 		add(pDisplay, BorderLayout.EAST);
-		GameControlPanel  gcp = new GameControlPanel(board);
 		add(gcp, BorderLayout.SOUTH);
 		
 		// menu

@@ -15,11 +15,12 @@ import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
-public class GameControlPanel extends JPanel{
+public class GameControlPanel extends JPanel {
+	
 	private static final long serialVersionUID = 1L;
 	private ArrayList<Player> players = new ArrayList<Player>();
 	private int whichPlayer = 0;
-	private JButton nextPlayer, makeAccusation;
+	public JButton nextPlayer, makeAccusation;
 	private TurnIndicator ti;
 	private prListner prList = new prListner();
 	private Board board;
@@ -123,6 +124,7 @@ public class GameControlPanel extends JPanel{
 		ti = new TurnIndicator();
 		nextPlayer = new JButton("Next Player");
 		makeAccusation = new JButton("Make Accusation");
+		makeAccusation.setEnabled(false);
 		players = (ArrayList<Player>) board.getAllPlayers().clone();
 		
 		// set layout and add components
@@ -172,6 +174,8 @@ public class GameControlPanel extends JPanel{
 					// draw targets avaiable for gui
 					board.repaintBoardWithHumanTargets(roll);
 					board.playerHasMoved = false;
+					makeAccusation.setEnabled(true);
+					nextPlayer.setEnabled(false);
 					return;
 				}
 				else if (whichPlayer == 0 && board.targetsSet && board.playerHasMoved) {
@@ -179,6 +183,8 @@ public class GameControlPanel extends JPanel{
 					board.targetsSet = false;
 					board.playerHasMoved = false;
 					board.repaintInitialBoard();
+					
+					// go to next player
 					whichPlayer++;
 					roll = rand.nextInt(6)+1;
 					die.setRoll(roll);
