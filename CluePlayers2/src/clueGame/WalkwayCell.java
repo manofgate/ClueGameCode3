@@ -16,5 +16,9 @@ public class WalkwayCell extends BoardCell {
 		g.fillRect(column*length, row*length, length, length);
 		g.setColor(Color.black);
 		g.drawRect(column*length, row*length, length, length);
+		
+		if (active) super.drawHighlighted(g, board);
 	}
+	
+	
 }

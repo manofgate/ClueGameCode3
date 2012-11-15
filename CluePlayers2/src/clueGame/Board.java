@@ -1,6 +1,8 @@
 package clueGame;
 
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -15,6 +17,8 @@ import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+import sun.swing.MenuItemLayoutHelper.ColumnAlignment;
 
 import clueGame.Card.CardType;
 
@@ -65,6 +69,8 @@ public class Board extends JPanel {
 	public Board() {
 		loadConfigFiles();
 		calcAdjacencies();
+		// added mouse listener
+		addMouseListener(new MouseHandler());
 	}
 
 	public void loadConfigFiles() {
@@ -515,6 +521,8 @@ public class Board extends JPanel {
 				break;
 			}
 		}
+		// TODO
+		// need to edit this part to only use the room the computer is currently in.
 		while (true) {
 			someCard = haveNotSeen.get(hazard.nextInt(haveNotSeen.size()));
 			if (someCard.type == CardType.ROOM){
@@ -548,6 +556,7 @@ public class Board extends JPanel {
 		return (Integer) null;
 		
 	}
+
 //	
 ////////////////////////////////
 
@@ -577,39 +586,94 @@ public class Board extends JPanel {
 		}
 	}
 	
+
+////////////////////////////////
+//	Clue Play!
 	
-	// ?? o.o
-	//
-	public Card disprovedCard= new Card();
+	// some variables
+	public Card disprovedCard = new Card();
+	public boolean targetsSet = false;
+	public boolean playerHasMoved = false;
+	
+	// given a computer player and a dice roll
+	// make the move or make an accusation
 	public Boolean makeMove(ComputerPlayer playerd, int step) {
 		suggestion.clear();
 		if (!playerd.isNoDisprove()) {
+			// this part makes them move!!
 			calcTargets(playerd.indexedLocation, step);
 			BoardCell picked = playerd.pickLocation(targets);
 			playerd.setIndexedLocation(calcIndex(picked.row, picked.column));
 			repaint();
+			
+			// if computer player is in room, make a suggestion
 			Boolean inRoom = false;
-			if(picked.isRoom()){
+			if (picked.isRoom()) {
 				inRoom = true;
 				disprovedCard = makeSuggestion(allPlayers.indexOf(playerd));
-				if(disprovedCard.type == CardType.NULL){
+				if (disprovedCard.type == CardType.NULL) {
 					playerd.setNoDisprove(true);
 					playerd.setSugAcusation((ArrayList<Card>) suggestion.clone());
 				}
 			}
 			return inRoom;
 		}
-		else{
+		
+		// computers want to accuse someone, and either fails or succeeds.
+		else {
 			playerd.setNoDisprove(false);  
-			if(checkAccusation(playerd.getSugAcusation().get(0), playerd.getSugAcusation().get(1), playerd.getSugAcusation().get(2))){
-				JOptionPane.showMessageDialog(this, (playerd.name + ", accused " +playerd.getSugAcusation().get(0).name + " " +playerd.getSugAcusation().get(1).name +" " +playerd.getSugAcusation().get(2).name + "is correct and won!"));
+			if (checkAccusation(playerd.getSugAcusation().get(0), playerd.getSugAcusation().get(1), playerd.getSugAcusation().get(2))) {
+				JOptionPane.showMessageDialog(this, (playerd.name + ", accused " +playerd.getSugAcusation().get(0).name + " " +playerd.getSugAcusation().get(1).name +" " +playerd.getSugAcusation().get(2).name + " is correct and won!"));
 			}
-			else{
-				JOptionPane.showMessageDialog(this, (playerd.name + ", accused: " +playerd.getSugAcusation().get(0).name + " " +playerd.getSugAcusation().get(1).name +" " +playerd.getSugAcusation().get(2).name + "is NOT correct!"));
+			else {
+				JOptionPane.showMessageDialog(this, (playerd.name + ", accused: " +playerd.getSugAcusation().get(0).name + " " +playerd.getSugAcusation().get(1).name +" " +playerd.getSugAcusation().get(2).name + " is NOT correct!"));
 			}
 		}
 		return null;
 	}
+
+	// repaint using human player targets
+	public void repaintBoardWithHumanTargets(int roll) {
+		HumanPlayer humanPlayer = (HumanPlayer) getAllPlayers().get(0);
+		calcTargets(humanPlayer.indexedLocation, roll);
+		for (BoardCell cell : getTargets()) {
+			cell.active = true;
+		}
+		targetsSet = true;
+		repaint();
+	}
+	
+	public void repaintInitialBoard() {
+		for (BoardCell cell : cells) {
+			cell.active = false;
+		}
+		repaint();
+	}
+	
+	// board mouse handler, makes the players move 
+	// if it is their time to move
+	private class MouseHandler implements MouseListener {
+		@Override
+		public void mousePressed(MouseEvent e) {
+			if (targetsSet && !playerHasMoved) {
+				int column = e.getX() / BoardCell.length;
+				int row = e.getY() / BoardCell.length;
+				BoardCell cell = getCellAt(calcIndex(row, column));
+				if (cell.active) {
+					allPlayers.get(0).indexedLocation = calcIndex(row,column);
+					playerHasMoved = true;
+					repaint();
+				}
+			}
+		}
+		public void mouseClicked(MouseEvent arg0) { }
+		public void mouseEntered(MouseEvent arg0) { }
+		public void mouseExited(MouseEvent arg0) { }
+		public void mouseReleased(MouseEvent arg0) { }
+	}
+	
+
+	
 //	
 ////////////////////////////////
 //		  END OF FILE		  //	

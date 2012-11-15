@@ -112,11 +112,11 @@ public class GameControlPanel extends JPanel{
 	
 	}
 	
-	public GameControlPanel(Board bord) {
+	public GameControlPanel(Board board) {
 		
 		// init components
 		die = new Die();
-		this.board = bord;
+		this.board = board;
 		guess = new Guess();
 		guessResult = new GuessResult();
 		JPanel panel = new JPanel();
@@ -147,25 +147,48 @@ public class GameControlPanel extends JPanel{
 		// Next Player Button listener!!! <-- <-- 
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == nextPlayer) {
+				if (board.targetsSet && !board.playerHasMoved) return;
+				
 				// clear Guesses and Results
 				guess.setGuess("");
 				guessResult.setResult("");
 				
 				// whichPlayer is global int, init to 0
 				ti.setText(players.get(whichPlayer).name);
-				// ..?
+				// .ah... double layered random
 				rand.setSeed(rand.nextLong());
 				
-				// create a die roll and set display
+				// create a die roll (1-6) and set display
 				int roll = rand.nextInt(6)+1;
 				die.setRoll(roll);
 				
+				//
+				//  START HERE
+				//
+				
+	
+				// if whichPlayer = 0, do human stuff
+				if (whichPlayer == 0 && !board.targetsSet) {
+					// draw targets avaiable for gui
+					board.repaintBoardWithHumanTargets(roll);
+					board.playerHasMoved = false;
+					return;
+				}
+				else if (whichPlayer == 0 && board.targetsSet && board.playerHasMoved) {
+					// repaint empty board
+					board.targetsSet = false;
+					board.playerHasMoved = false;
+					board.repaintInitialBoard();
+					whichPlayer++;
+					roll = rand.nextInt(6)+1;
+					die.setRoll(roll);
+				}
 				// 0 is human player, i believe
 				// so if not human, execute computer code
 				if (whichPlayer != 0) {
 					//if(!((ComputerPlayer) players.get(whichPlayer)).isNoDisprove()){
 						Boolean roomy = board.makeMove((ComputerPlayer) players.get(whichPlayer), roll);
-						if(roomy){
+						if (roomy) {
 							guess.setGuess(board.getSuggestion().get(0).name + " " + board.getSuggestion().get(1).name + " " + board.getSuggestion().get(2).name);
 							guessResult.setResult(board.disprovedCard.name);
 						}
@@ -174,7 +197,7 @@ public class GameControlPanel extends JPanel{
 				
 				// increment turn
 				whichPlayer++;
-				if(whichPlayer > 5)
+				if (whichPlayer > 5)
 					whichPlayer = 0;
 			}
 		}

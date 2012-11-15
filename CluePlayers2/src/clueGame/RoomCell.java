@@ -46,7 +46,7 @@ public class RoomCell extends BoardCell {
 	public char getInitial() { return initial; }
 
 	public boolean isDoorway() {
-		if(this.doorDirection != DoorDirection.NONE){
+		if (this.doorDirection != DoorDirection.NONE) {
 			return true;
 		}
 		return false;
@@ -69,6 +69,8 @@ public class RoomCell extends BoardCell {
 			if(this.doorDirection == DoorDirection.NAME)
 				g.drawString(board.rooms.get(initial), (int) (column*length-.5*length), row*length - 5);
 		}
+		
+		if (active) super.drawHighlighted(g, board);
 
 	}
 }
