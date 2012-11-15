@@ -133,7 +133,7 @@ public class GameControlPanel extends JPanel {
 		// oh thats where this thing was hiding... o.O
 		nextPlayer.addActionListener(prList);
 		
-		panel.setPreferredSize(new Dimension(650, 136));
+		panel.setPreferredSize(new Dimension(700, 136));
 		panel.add(ti);
 		panel.add(nextPlayer);
 		panel.add(makeAccusation);
@@ -149,7 +149,6 @@ public class GameControlPanel extends JPanel {
 		// Next Player Button listener!!! <-- <-- 
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == nextPlayer) {
-				if (board.targetsSet && !board.playerHasMoved) return;
 				
 				// clear Guesses and Results
 				guess.setGuess("");

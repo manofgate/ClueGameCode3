@@ -21,7 +21,7 @@ public class ClueGame extends JFrame {
 		// init
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Clue Game");
-		setSize(700, 720);
+		setSize(720, 720);
 		
 		// components
 		Board board = new Board();

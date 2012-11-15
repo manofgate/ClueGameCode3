@@ -478,7 +478,7 @@ public class Board extends JPanel {
 		else return false;
 	}
 	
-	//returns a card from a player or null card if no players have any of suggested cards
+	// returns a card from a player or null card if no players have any of suggested cards
 	public Card disproveSuggestion(int currentPlayer, String person, String room, String weapon) {
 		Card someCard;
 		ArrayList<Player> playersToCheck = new ArrayList<Player>();
@@ -498,14 +498,11 @@ public class Board extends JPanel {
 		return new Card();
 	}
 	
-	// this method is in Board and not ComputerPlayer
-	// this is because computers work together anyways.
-	// this method needs to be updated to take in the location of the computer player as well
-	// but more on that when we know exactly how it's going down
+	// computer players making a suggestion
 	public Card makeSuggestion(int indexOfComputerPlayer) {
 		Card someCard;
 		Card personCard;
-		Card roomCard;
+		Card roomCard = null;
 		Card weaponCard;
 		Random hazard = new Random();
 		
@@ -514,6 +511,7 @@ public class Board extends JPanel {
 		haveNotSeen.removeAll(allPlayers.get(indexOfComputerPlayer).cards);
 		haveNotSeen.removeAll(cardsSeen);
 		
+		// select a person
 		while (true) {
 			someCard = haveNotSeen.get(hazard.nextInt(haveNotSeen.size()));
 			if (someCard.type == CardType.PERSON) {
@@ -521,22 +519,37 @@ public class Board extends JPanel {
 				break;
 			}
 		}
-		// TODO
-		// need to edit this part to only use the room the computer is currently in.
-		while (true) {
-			someCard = haveNotSeen.get(hazard.nextInt(haveNotSeen.size()));
-			if (someCard.type == CardType.ROOM){
-				roomCard = someCard;
+		
+		// use room that computer player is currently in
+		ComputerPlayer computerPlayer = (ComputerPlayer) allPlayers.get(indexOfComputerPlayer);
+		RoomCell roomCell = (RoomCell) getCellAt(computerPlayer.indexedLocation);
+		String roomName = getRooms().get(roomCell.initial);
+		for (Card someOtherCard : deck) {
+			if (someOtherCard.name.equalsIgnoreCase(roomName)) {
+				roomCard = someOtherCard;
 				break;
 			}
 		}
+		
+		// select a weapon
 		while (true) {
 			someCard = haveNotSeen.get(hazard.nextInt(haveNotSeen.size()));
 			if (someCard.type == CardType.WEAPON){
 				weaponCard = someCard;
 				break;
 			}
+		} 
+		
+		// move selected person to the room cell
+		for (Player player : allPlayers) {
+			if (player.name.equalsIgnoreCase(personCard.name)) {
+				player.indexedLocation = calcIndex(roomCell.row, roomCell.column);
+				repaint();
+				break;
+			}
 		}
+		
+		// ending stuff
 		suggestion.add(personCard);
 		suggestion.add(roomCard);
 		suggestion.add(weaponCard);
@@ -658,6 +671,7 @@ public class Board extends JPanel {
 			if (targetsSet) {
 				int column = e.getX() / BoardCell.length;
 				int row = e.getY() / BoardCell.length;
+				if (column > numColumns || row > numRows) return;
 				BoardCell cell = getCellAt(calcIndex(row, column));
 				if (cell.active) {
 					allPlayers.get(0).indexedLocation = calcIndex(row,column);
