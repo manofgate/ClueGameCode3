@@ -39,10 +39,10 @@ public class ClueGame extends JFrame {
 		
 		// set visible
 		setVisible(true);
-		JOptionPane.showMessageDialog(this, "you are Miss Scarlett, press Next Player to begin play", "Welcome to CLUE", JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(this, "You are Miss Scarlett, press Next Player to begin play", "Welcome to Clue", JOptionPane.INFORMATION_MESSAGE);
 	}
 
-	// file menu, for nothing but teh [EXIT]
+	// file menu, for nothing but teh [EXIT] + DetectiveNotes
 	private JMenu createFileMenu() {
 		JMenu menu = new JMenu("File"); 
 		menu.add(createDetectiveNotes());

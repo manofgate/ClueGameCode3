@@ -1,6 +1,5 @@
 package clueGame;
 
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -11,7 +10,6 @@ import java.util.Random;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
@@ -20,7 +18,7 @@ import javax.swing.border.TitledBorder;
 public class GameControlPanel extends JPanel{
 	private static final long serialVersionUID = 1L;
 	private ArrayList<Player> players = new ArrayList<Player>();
-	private int whichPlayer=0;
+	private int whichPlayer = 0;
 	private JButton nextPlayer, makeAccusation;
 	private TurnIndicator ti;
 	private prListner prList = new prListner();
@@ -126,9 +124,13 @@ public class GameControlPanel extends JPanel{
 		nextPlayer = new JButton("Next Player");
 		makeAccusation = new JButton("Make Accusation");
 		players = (ArrayList<Player>) board.getAllPlayers().clone();
+		
 		// set layout and add components
 		panel.setLayout(new GridLayout(2,3));
+		
+		// oh thats where this thing was hiding... o.O
 		nextPlayer.addActionListener(prList);
+		
 		panel.setPreferredSize(new Dimension(650, 136));
 		panel.add(ti);
 		panel.add(nextPlayer);
@@ -139,17 +141,28 @@ public class GameControlPanel extends JPanel{
 		add(panel);
 		
 	}
+	
 	public class prListner implements ActionListener{
 		@Override
-		public void actionPerformed(ActionEvent e){
-			if(e.getSource() == nextPlayer){
+		// Next Player Button listener!!! <-- <-- 
+		public void actionPerformed(ActionEvent e) {
+			if (e.getSource() == nextPlayer) {
+				// clear Guesses and Results
 				guess.setGuess("");
 				guessResult.setResult("");
+				
+				// whichPlayer is global int, init to 0
 				ti.setText(players.get(whichPlayer).name);
+				// ..?
 				rand.setSeed(rand.nextLong());
+				
+				// create a die roll and set display
 				int roll = rand.nextInt(6)+1;
 				die.setRoll(roll);
-				if(whichPlayer !=0){
+				
+				// 0 is human player, i believe
+				// so if not human, execute computer code
+				if (whichPlayer != 0) {
 					//if(!((ComputerPlayer) players.get(whichPlayer)).isNoDisprove()){
 						Boolean roomy = board.makeMove((ComputerPlayer) players.get(whichPlayer), roll);
 						if(roomy){
@@ -157,9 +170,12 @@ public class GameControlPanel extends JPanel{
 							guessResult.setResult(board.disprovedCard.name);
 						}
 				}
+				// exit executing Player code
+				
+				// increment turn
 				whichPlayer++;
-				if(whichPlayer >5)
-					whichPlayer =0;
+				if(whichPlayer > 5)
+					whichPlayer = 0;
 			}
 		}
 	}

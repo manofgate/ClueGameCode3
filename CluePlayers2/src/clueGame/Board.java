@@ -536,11 +536,13 @@ public class Board extends JPanel {
 		cardsSeen.add(someCard);
 		return someCard;
 	}
+	
 	private ArrayList<Card> suggestion = new ArrayList<Card>();
-	public ArrayList<Card> getSuggestion(){return suggestion;}
-	public int findHuman(){
-		for(Player p: allPlayers){
-			if(p.isHuman())
+	public ArrayList<Card> getSuggestion() { return suggestion; }
+	
+	public int findHuman() {
+		for (Player p : allPlayers) {
+			if (p.isHuman())
 				return allPlayers.indexOf(p);
 		}
 		return (Integer) null;
@@ -574,10 +576,14 @@ public class Board extends JPanel {
 			player.draw(g, this);
 		}
 	}
+	
+	
+	// ?? o.o
+	//
 	public Card disprovedCard= new Card();
-	public Boolean makeMove(ComputerPlayer playerd, int step){
+	public Boolean makeMove(ComputerPlayer playerd, int step) {
 		suggestion.clear();
-		if(!playerd.isNoDisprove()){
+		if (!playerd.isNoDisprove()) {
 			calcTargets(playerd.indexedLocation, step);
 			BoardCell picked = playerd.pickLocation(targets);
 			playerd.setIndexedLocation(calcIndex(picked.row, picked.column));
