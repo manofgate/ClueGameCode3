@@ -45,7 +45,7 @@ public class Board extends JPanel {
 //
 	
 	ArrayList<BoardCell> cells = new ArrayList<BoardCell>();
-	Map<Character,String> rooms = new HashMap<Character,String>();	
+	static Map<Character,String> rooms = new HashMap<Character,String>();	
 	
 	private Map<Integer, LinkedList<Integer>>adjList = new HashMap<Integer, LinkedList<Integer>>();
 	private HashSet<BoardCell> targets;
@@ -263,7 +263,7 @@ public class Board extends JPanel {
 
 	public BoardCell getCellAt(int index) { return cells.get(index); }
 
-	public Map<Character, String> getRooms() { return rooms; }
+	static public Map<Character, String> getRooms() { return rooms; }
 
 	public int getNumRows() { return numRows; }
 
@@ -354,10 +354,10 @@ public class Board extends JPanel {
 	public ArrayList<Card> getDealDeck() { return dealDeck; }
 	public ArrayList<Card> getDeck() { return deck; }
 
-	private ArrayList<Card> cardsSeen = new ArrayList<Card>();
+	static private ArrayList<Card> cardsSeen = new ArrayList<Card>();
 	private ArrayList<Card> solution = new ArrayList<Card>();
 	public ArrayList<Card> getSolution() { return solution; }
-	public ArrayList<Card> getCardsSeen() { return cardsSeen; }
+	static public ArrayList<Card> getCardsSeen() { return cardsSeen; }
 	
 //	variables to hold list of cards, list of computer 
 //	players, one human player, and an indicator of whose turn it is
@@ -637,11 +637,16 @@ public class Board extends JPanel {
 		else {
 			playerd.setNoDisprove(false);  
 			if (checkAccusation(playerd.getSugAcusation().get(0), playerd.getSugAcusation().get(1), playerd.getSugAcusation().get(2))) {
-				JOptionPane.showMessageDialog(this, (playerd.name + ", accused " +playerd.getSugAcusation().get(0).name + " " +playerd.getSugAcusation().get(1).name +" " +playerd.getSugAcusation().get(2).name + " is correct and won!"));
+				JOptionPane.showMessageDialog(null, 
+						playerd.name + ", accused " + 
+						playerd.getSugAcusation().get(0).name + " " + 
+						playerd.getSugAcusation().get(1).name + " " + 
+						playerd.getSugAcusation().get(2).name + 
+						" is correct and won!", "Accusation Correct!", 0);
 				ClueGame.gcp.nextPlayer.setEnabled(false);
 			}
 			else {
-				JOptionPane.showMessageDialog(this, (playerd.name + ", accused: " +playerd.getSugAcusation().get(0).name + " " +playerd.getSugAcusation().get(1).name +" " +playerd.getSugAcusation().get(2).name + " is NOT correct!"));
+				JOptionPane.showMessageDialog(this, (playerd.name + ", accused " + playerd.getSugAcusation().get(0).name + " " + playerd.getSugAcusation().get(1).name +" " +playerd.getSugAcusation().get(2).name + " is NOT correct!"), "Accusation not correct!", 0);
 			}
 		}
 		return null;
@@ -681,6 +686,12 @@ public class Board extends JPanel {
 					ClueGame.gcp.makeAccusation.setEnabled(false);
 					ClueGame.gcp.nextPlayer.setEnabled(true);
 					repaint();
+					//
+					//	START HERE
+					//
+					if (cell.isRoom()) {
+						
+					}
 				}
 			}
 		}

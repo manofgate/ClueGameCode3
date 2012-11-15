@@ -67,7 +67,7 @@ public class RoomCell extends BoardCell {
 			if(this.doorDirection == DoorDirection.RIGHT)
 				g.fillRect(column*Board.drawLength+Board.drawLength-4, row*Board.drawLength, 4, Board.drawLength);
 			if(this.doorDirection == DoorDirection.NAME)
-				g.drawString(board.rooms.get(initial), (int) (column*Board.drawLength-.5*Board.drawLength), row*Board.drawLength - 5);
+				g.drawString(Board.getRooms().get(initial), (int) (column*Board.drawLength-.5*Board.drawLength), row*Board.drawLength - 5);
 		}
 		
 		if (active) super.drawHighlighted(g, board);

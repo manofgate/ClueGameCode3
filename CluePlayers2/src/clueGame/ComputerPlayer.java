@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
 
+import clueGame.Card.CardType;
+
 public class ComputerPlayer extends Player {
 	private boolean noDisprove;
 	private ArrayList<Card> sugAcusation = new ArrayList<Card>();
@@ -31,9 +33,24 @@ public class ComputerPlayer extends Player {
 		// unless been in that room recently
 		// otherwise, pick a totally random location out of the list
 		
+		ArrayList<String> seenRooms = new ArrayList<String>();
+		for (Card someCard : Board.getCardsSeen()) { 
+			if (someCard.type == CardType.ROOM) {
+				seenRooms.add(someCard.name);
+			}
+		}
+		
 		for (BoardCell target : targets) {
 			if (target.isDoorway()) {
-				if(!target.equals(lastRoom))
+				RoomCell roomCell = (RoomCell) target;
+				boolean haveSeen = false;
+				for (String roomName : seenRooms) {
+					if (roomName.equalsIgnoreCase(Board.getRooms().get(roomCell.getInitial()))) {
+						haveSeen = true;
+						break;
+					}
+				}
+				if(!roomCell.equals(lastRoom) && !haveSeen)
 					return target;				
 			}
 		}
