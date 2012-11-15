@@ -125,7 +125,7 @@ public class GameControlPanel extends JPanel {
 		nextPlayer = new JButton("Next Player");
 		makeAccusation = new JButton("Make Accusation");
 		makeAccusation.setEnabled(false);
-		players = (ArrayList<Player>) board.getAllPlayers().clone();
+		players = board.getAllPlayers();
 		
 		// set layout and add components
 		panel.setLayout(new GridLayout(2,3));

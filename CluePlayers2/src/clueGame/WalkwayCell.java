@@ -13,9 +13,9 @@ public class WalkwayCell extends BoardCell {
 	@Override
 	public void draw(Graphics g, Board board){
 		g.setColor(Color.yellow);
-		g.fillRect(column*length, row*length, length, length);
+		g.fillRect(column*Board.drawLength, row*Board.drawLength, Board.drawLength, Board.drawLength);
 		g.setColor(Color.black);
-		g.drawRect(column*length, row*length, length, length);
+		g.drawRect(column*Board.drawLength, row*Board.drawLength, Board.drawLength, Board.drawLength);
 		
 		if (active) super.drawHighlighted(g, board);
 	}

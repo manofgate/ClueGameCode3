@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 public abstract class BoardCell {
-	protected static final int length = 23;
 	public int row;
 	public int column;
 	
@@ -38,7 +37,7 @@ public abstract class BoardCell {
 	
 	public void drawHighlighted(Graphics g, Board b) {
 		g.setColor(Color.CYAN);
-		g.fillRect(column*length + 1, row*length + 1, length - 1, length - 1);
+		g.fillRect(column*Board.drawLength + 1, row*Board.drawLength + 1, Board.drawLength - 1, Board.drawLength - 1);
 	}
 
 	

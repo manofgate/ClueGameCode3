@@ -6,9 +6,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 public abstract class Player {
-	
-	private static final int length = 23;
-	
+		
 //	instance variables
 	public String name;
 	public Color color;
@@ -62,9 +60,9 @@ public abstract class Player {
 	public void draw(Graphics g, Board board) {
 		int[] columnAndRow = board.calcColumnAndRow(indexedLocation);
 		g.setColor(color);
-		g.fillOval(columnAndRow[0] * length + 1, columnAndRow[1] * length + 1, length - 2, length - 2);
+		g.fillOval(columnAndRow[0] * Board.drawLength + 1, columnAndRow[1] * Board.drawLength + 1, Board.drawLength - 2, Board.drawLength - 2);
 		g.setColor(Color.BLACK);
-		g.drawOval(columnAndRow[0] * length + 1, columnAndRow[1] * length + 1, length - 2, length - 2);
+		g.drawOval(columnAndRow[0] * Board.drawLength + 1, columnAndRow[1] * Board.drawLength + 1, Board.drawLength - 2, Board.drawLength - 2);
 	}
 	public void setIndexedLocation(int indexed){
 		indexedLocation = indexed;

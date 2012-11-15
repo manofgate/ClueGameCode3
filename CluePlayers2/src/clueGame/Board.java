@@ -18,8 +18,6 @@ import java.util.Scanner;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import sun.swing.MenuItemLayoutHelper.ColumnAlignment;
-
 import clueGame.Card.CardType;
 
 public class Board extends JPanel {
@@ -608,8 +606,11 @@ public class Board extends JPanel {
 	public boolean targetsSet = false;
 	public boolean playerHasMoved = false;
 	
+	public static final int drawLength = 26;
+	
 	// given a computer player and a dice roll
 	// make the move or make an accusation
+	@SuppressWarnings("unchecked") // <-- :(
 	public Boolean makeMove(ComputerPlayer playerd, int step) {
 		suggestion.clear();
 		if (!playerd.isNoDisprove()) {
@@ -637,6 +638,7 @@ public class Board extends JPanel {
 			playerd.setNoDisprove(false);  
 			if (checkAccusation(playerd.getSugAcusation().get(0), playerd.getSugAcusation().get(1), playerd.getSugAcusation().get(2))) {
 				JOptionPane.showMessageDialog(this, (playerd.name + ", accused " +playerd.getSugAcusation().get(0).name + " " +playerd.getSugAcusation().get(1).name +" " +playerd.getSugAcusation().get(2).name + " is correct and won!"));
+				ClueGame.gcp.nextPlayer.setEnabled(false);
 			}
 			else {
 				JOptionPane.showMessageDialog(this, (playerd.name + ", accused: " +playerd.getSugAcusation().get(0).name + " " +playerd.getSugAcusation().get(1).name +" " +playerd.getSugAcusation().get(2).name + " is NOT correct!"));
@@ -669,8 +671,8 @@ public class Board extends JPanel {
 		@Override
 		public void mousePressed(MouseEvent e) {
 			if (targetsSet) {
-				int column = e.getX() / BoardCell.length;
-				int row = e.getY() / BoardCell.length;
+				int column = e.getX() / drawLength;
+				int row = e.getY() / drawLength;
 				if (column > numColumns || row > numRows) return;
 				BoardCell cell = getCellAt(calcIndex(row, column));
 				if (cell.active) {

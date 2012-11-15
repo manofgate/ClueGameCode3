@@ -55,19 +55,19 @@ public class RoomCell extends BoardCell {
 	@Override
 	public void draw(Graphics g, Board board){
 		g.setColor(Color.gray);
-		g.fillRect(column*length, row*length, length, length);
+		g.fillRect(column*Board.drawLength, row*Board.drawLength, Board.drawLength, Board.drawLength);
 		if(this.isDoorway()){
 			g.setColor(Color.BLUE);
 			if(this.doorDirection == DoorDirection.UP)
-				g.fillRect(column*length, row*length, length, 4);
+				g.fillRect(column*Board.drawLength, row*Board.drawLength, Board.drawLength, 4);
 			if(this.doorDirection == DoorDirection.DOWN)
-				g.fillRect(column*length, row*length+length-4, length, 4);
+				g.fillRect(column*Board.drawLength, row*Board.drawLength+Board.drawLength-4, Board.drawLength, 4);
 			if(this.doorDirection == DoorDirection.LEFT)
-				g.fillRect(column*length, row*length, 4, length);
+				g.fillRect(column*Board.drawLength, row*Board.drawLength, 4, Board.drawLength);
 			if(this.doorDirection == DoorDirection.RIGHT)
-				g.fillRect(column*length+length-4, row*length, 4, length);
+				g.fillRect(column*Board.drawLength+Board.drawLength-4, row*Board.drawLength, 4, Board.drawLength);
 			if(this.doorDirection == DoorDirection.NAME)
-				g.drawString(board.rooms.get(initial), (int) (column*length-.5*length), row*length - 5);
+				g.drawString(board.rooms.get(initial), (int) (column*Board.drawLength-.5*Board.drawLength), row*Board.drawLength - 5);
 		}
 		
 		if (active) super.drawHighlighted(g, board);
