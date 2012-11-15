@@ -692,7 +692,8 @@ public class Board extends JPanel {
 					//	START HERE
 					//
 					if (cell.isRoom()) {
-						
+						RoomCell roomCell = (RoomCell) cell;
+						ClueGame.humanGuess = new HumanGuess(ClueGame.board, ClueGame.board.getRooms().get(roomCell.initial));
 					}
 				}
 			}

@@ -25,9 +25,9 @@ public class GameControlPanel extends JPanel {
 	private prListner prList = new prListner();
 	private Board board;
 	private Random rand= new Random();
-	private Guess guess; 
+	public Guess guess; 
 	private Die die;
-	private GuessResult guessResult;
+	public GuessResult guessResult;
 	public class Die extends JPanel {
 		private static final long serialVersionUID = 1L;
 		

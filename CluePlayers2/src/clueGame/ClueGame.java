@@ -18,7 +18,7 @@ public class ClueGame extends JFrame {
 	
 	public static HumanGuess humanGuess;
 	
-	Board board;
+	public static Board board;
 	
 	public ClueGame() {
 		// init
@@ -79,15 +79,17 @@ public class ClueGame extends JFrame {
 	
 
 	// main, wooters
+	@SuppressWarnings("static-access")
 	public static void main(String[] args) {
 		System.out.println("Hello world!!\n");
-
+		
 		ClueGame futureHazard = new ClueGame();
 		
 		System.out.println("[DEBUG] - SOLUTIONS");
 		for (Card card : futureHazard.board.getSolution()) {
 			System.out.println(card.name);
 		}
+		
 
 		System.out.println("\nGoodbye world..\n");
 	}
